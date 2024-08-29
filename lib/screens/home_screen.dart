@@ -1,11 +1,20 @@
+import 'package:booking_app/components/drawer_animation_widget.dart';
+import 'package:booking_app/components/drawer_widget.dart';
 import 'package:booking_app/components/my_text.dart';
 import 'package:booking_app/utils/my-theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:gap/gap.dart';
-import '../components/date_time_component_widget.dart';
-import '../components/elevation_button_widget.dart';
+import 'package:provider/provider.dart';
+import '../components/bottom_icon_widget.dart';
+import '../components/current_booking_widget.dart';
+
+import '../components/packages_card_widget.dart';
 import '../components/rounded_image_widget.dart';
 import '../constants/image_const.dart';
+import '../models/current_booking_model.dart';
+import '../models/package_model.dart';
+import '../view_models/home_view_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,21 +24,87 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<Map<String, dynamic>> bottomList = [
+    {
+      'title': 'home',
+      'icon': Icons.home,
+    },
+    {
+      'title': 'Packages',
+      'icon': Icons.av_timer,
+    },
+    {
+      'title': 'Bookings',
+      'icon': Icons.access_time,
+    },
+    {
+      'title': 'Profile',
+      'icon': Icons.person_outline_outlined,
+    },
+  ];
+  int currentIndex = 0;
+  final _drawerKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
+      await context.read<HomeViewModel>().bookingListApi();
+      if (mounted) await context.read<HomeViewModel>().packageListApi();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _drawerKey,
+      bottomNavigationBar: SizedBox(
+        height: 74,
+        child: BottomAppBar(
+          color: MyColorTheme.whiteColor,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ...List.generate(
+                bottomList.length,
+                (i) {
+                  var data = bottomList[i];
+                  return BottomIconWidget(
+                    title: data['title'],
+                    icon: data['icon'],
+                    iconColor: context.read<HomeViewModel>().currentIndex == i ? MyColorTheme.primaryColor : MyColorTheme.black87,
+                    textColor: context.read<HomeViewModel>().currentIndex == i ? MyColorTheme.primaryColor : MyColorTheme.black87,
+                    isVisible: context.read<HomeViewModel>().currentIndex == i,
+                    onTap: () {
+                      context.read<HomeViewModel>().currentIndexFxn(i);
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
       appBar: AppBar(
+
+        automaticallyImplyLeading: false,
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 30.0),
-            child: Image.asset(
-              ImageConst.banner,
-              width: 33,
-              height: 33,
+          GestureDetector(
+            onTap: () {
+              _drawerKey.currentState?.openDrawer();
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 30.0),
+              child: Image.asset(
+                ImageConst.banner,
+                width: 33,
+                height: 33,
+              ),
             ),
           ),
         ],
       ),
+      drawer:  DrawerWidget(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,95 +148,72 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               child: MyText(
                 title: 'Your Current Booking',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontSize: 16,
                       color: MyColorTheme.darkBlueColor,
                       fontWeight: FontWeight.w600,
                     ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-              child: SizedBox(
-                height: 150,
-                width: double.maxFinite,
-                child: Card(
-                  elevation: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            MyText(
-                              title: 'One Day Package',
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    fontSize: 15,
-                                    color: MyColorTheme.primaryColor,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                            ),
-                            const Spacer(),
-                            SizedBox(
-                              height: 20,
-                              child: ElevationButtonWidget(
-                                onPressed: () {},
-                              ),
-                            )
-                          ],
-                        ),
-                        const Gap(10),
-                        const Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: DateTimeComponentWidget(),
-                            ),
-                            Expanded(
-                              child: DateTimeComponentWidget(
-                                title: 'To',
-                                date: '12.08.2024',
-                                time: '11 pm',
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              height: 20,
-                              width: 100,
-                              child: ElevationButtonWidget(
-                                backGroundColor: MyColorTheme.darkBlueColor,
-                                chidlWidget: Padding(
-                                  padding: const EdgeInsets.only(left: 13.0),
-                                  child: Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.star_border,
-                                        size: 15,
-                                        color: MyColorTheme.whiteColor,
-                                      ),
-                                      MyText(
-                                        title: "Rate Us",
-                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                              color: MyColorTheme.whiteColor,
-                                              fontSize: 10,
-                                            ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
+            //booking
+            Visibility(
+              visible: context.watch<HomeViewModel>().bookingList.isNotEmpty,
+              replacement: const Center(
+                child: CircularProgressIndicator(
+                  color: MyColorTheme.primaryLightColor,
                 ),
               ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ...List.generate(context.watch<HomeViewModel>().bookingList.length, (i) {
+                    CurrentBookingModel data = context.watch<HomeViewModel>().bookingList[i] ?? CurrentBookingModel();
+                    return CurrentBookingWidget(
+                      title: data.title,
+                      fromDate: data.fromDate,
+                      fromTime: data.fromTime,
+                      toDate: data.toDate,
+                      toTime: data.toTime,
+                    );
+                  }),
+                ],
+              ),
             ),
+        
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+              child: MyText(
+                title: 'Packages',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontSize: 16,
+                      color: MyColorTheme.darkBlueColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+            ),
+            Visibility(
+                visible: context.watch<HomeViewModel>().packageList.isNotEmpty,
+                replacement: const Center(
+                  child: CircularProgressIndicator(
+                    color: MyColorTheme.primaryLightColor,
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    ...List.generate(
+                      context.watch<HomeViewModel>().packageList.length,
+                      (i) {
+                        PackageModel data = context.watch<HomeViewModel>().packageList[i] ?? PackageModel();
+                        return PackagesCardWidget(
+                          color: i % 2 == 0 ? MyColorTheme.primaryLightColor : MyColorTheme.lightBlueColor,
+                          title: data.title,
+                          description: data.desc,
+                          price: data.price,
+                        );
+                      },
+                    ),
+                  ],
+                ))
           ],
         ),
       ),

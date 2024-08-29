@@ -7,7 +7,11 @@ import 'my_text_theme.dart';
 class MyAppTheme {
   static myThemeData() {
     return ThemeData(
+      drawerTheme: const DrawerThemeData(
+        backgroundColor: MyColorTheme.whiteColor
+      ),
       appBarTheme: const AppBarTheme(
+        surfaceTintColor: MyColorTheme.whiteColor,
         color: MyColorTheme.whiteColor,
       ),
       elevatedButtonTheme:const  ElevatedButtonThemeData(

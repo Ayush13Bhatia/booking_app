@@ -4,10 +4,11 @@ import 'package:gap/gap.dart';
 import 'my_text.dart';
 
 class DateTimeComponentWidget extends StatelessWidget {
-  final String ? title;
-  final String ? date;
-  final String ? time;
-  const DateTimeComponentWidget({super.key,this.title,this.date,this.time});
+  final String? title;
+  final String? date;
+  final String? time;
+
+  const DateTimeComponentWidget({super.key, this.title, this.date, this.time});
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +18,10 @@ class DateTimeComponentWidget extends StatelessWidget {
         MyText(
           title: title ?? 'From',
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            fontSize: 12,
-            color: Colors.black,
-            fontWeight: FontWeight.w300,
-          ),
+                fontSize: 12,
+                color: Colors.black,
+                fontWeight: FontWeight.w300,
+              ),
         ),
         const Gap(5),
         Row(
@@ -29,8 +30,9 @@ class DateTimeComponentWidget extends StatelessWidget {
               Icons.calendar_month,
               size: 10,
             ),
+            const Gap(1),
             MyText(
-              title: date??  '12.08.2024',
+              title: date ?? '',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 12),
             )
           ],
@@ -43,7 +45,7 @@ class DateTimeComponentWidget extends StatelessWidget {
               size: 11,
             ),
             MyText(
-              title: time ?? '11 pm',
+              title: time ?? '',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 12),
             )
           ],
