@@ -12,12 +12,18 @@ import '../data_services/http_services.dart';
 class HomeViewModel with ChangeNotifier {
   List<dynamic> _bookingList = [];
   List<dynamic> _packageList = [];
+  bool _isAnimatePage = false;
 
   int _currentIndex = 0;
   List<dynamic> get bookingList => _bookingList;
   int get currentIndex => _currentIndex;
+  bool get isAnimatePage => _isAnimatePage;
   void currentIndexFxn([int? index]){
     _currentIndex = index ?? 0;
+    notifyListeners();
+  }
+  void animate(){
+    _isAnimatePage = !_isAnimatePage;
     notifyListeners();
   }
 

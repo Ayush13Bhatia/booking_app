@@ -8,12 +8,13 @@ import 'elevation_button_widget.dart';
 import 'my_text.dart';
 
 class CurrentBookingWidget extends StatelessWidget {
-  final String ? title;
-  final String ? fromTime;
-  final String ? toTime;
-  final String ? fromDate;
-  final String ? toDate;
-  const CurrentBookingWidget({super.key,this.toDate,this.toTime,this.fromDate,this.fromTime,this.title});
+  final String? title;
+  final String? fromTime;
+  final String? toTime;
+  final String? fromDate;
+  final String? toDate;
+
+  const CurrentBookingWidget({super.key, this.toDate, this.toTime, this.fromDate, this.fromTime, this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +27,12 @@ class CurrentBookingWidget extends StatelessWidget {
             Row(
               children: [
                 MyText(
-                  title: title ??'',
+                  title: title ?? '',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: 15,
-                    color: MyColorTheme.primaryColor,
-                    fontWeight: FontWeight.w500,
-                  ),
+                        fontSize: 15,
+                        color: MyColorTheme.primaryColor,
+                        fontWeight: FontWeight.w500,
+                      ),
                 ),
                 const Spacer(),
                 ElevationButtonWidget(
@@ -40,14 +41,13 @@ class CurrentBookingWidget extends StatelessWidget {
               ],
             ),
             const Gap(10),
-             Row(
+            Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   child: DateTimeComponentWidget(
                     time: fromTime,
                     date: fromDate,
-
                   ),
                 ),
                 Expanded(
@@ -77,9 +77,9 @@ class CurrentBookingWidget extends StatelessWidget {
                         MyText(
                           title: "Rate Us",
                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: MyColorTheme.whiteColor,
-                            fontSize: 10,
-                          ),
+                                color: MyColorTheme.whiteColor,
+                                fontSize: 10,
+                              ),
                         )
                       ],
                     ),
@@ -99,9 +99,9 @@ class CurrentBookingWidget extends StatelessWidget {
                         MyText(
                           title: "Geolocation",
                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: MyColorTheme.whiteColor,
-                            fontSize: 10,
-                          ),
+                                color: MyColorTheme.whiteColor,
+                                fontSize: 10,
+                              ),
                         )
                       ],
                     ),
@@ -121,9 +121,9 @@ class CurrentBookingWidget extends StatelessWidget {
                         MyText(
                           title: "Surveillance",
                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: MyColorTheme.whiteColor,
-                            fontSize: 10,
-                          ),
+                                color: MyColorTheme.whiteColor,
+                                fontSize: 10,
+                              ),
                         )
                       ],
                     ),
