@@ -1,3 +1,4 @@
+import 'package:booking_app/utils/my-theme.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -19,7 +20,7 @@ class DateTimeComponentWidget extends StatelessWidget {
           title: title ?? 'From',
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontSize: 12,
-                color: Colors.black,
+                color: MyColorTheme.blackColor,
                 fontWeight: FontWeight.w300,
               ),
         ),
@@ -28,7 +29,8 @@ class DateTimeComponentWidget extends StatelessWidget {
           children: [
             const Icon(
               Icons.calendar_month,
-              size: 10,
+              color: MyColorTheme.primaryLightColor,
+              size: 12,
             ),
             const Gap(1),
             MyText(
@@ -42,8 +44,10 @@ class DateTimeComponentWidget extends StatelessWidget {
           children: [
             const Icon(
               Icons.access_time,
-              size: 11,
+              color: MyColorTheme.primaryLightColor,
+              size: 12,
             ),
+            const Gap(1),
             MyText(
               title: time ?? '',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 12),

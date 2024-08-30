@@ -39,6 +39,7 @@ dependencies:
   http: ^1.2.2
   provider: ^6.1.2
   loader_overlay: ^4.0.1
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:

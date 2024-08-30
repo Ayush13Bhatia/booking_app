@@ -47,14 +47,19 @@ class _DrawerAnimationWidgetState extends State<DrawerAnimationWidget> {
               },
         child: Padding(
           padding: EdgeInsets.only(top: !context.read<HomeViewModel>().isAnimatePage ? 0 : 70.0),
-          child: SizedBox(
+          child: Container(
             height: !context.read<HomeViewModel>().isAnimatePage ? double.maxFinite : 600,
+            decoration: BoxDecoration(
+                // color: Colors.green,
+                borderRadius: BorderRadius.circular(20)),
             child: Card(
+              color: Colors.red,
               elevation: !context.read<HomeViewModel>().isAnimatePage ? 0 : 10,
+              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
               child: Container(
                 height: double.maxFinite,
                 width: !context.read<HomeViewModel>().isAnimatePage ? double.maxFinite : 300,
-                color: MyColorTheme.whiteColor,
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
                 child: widget.child,
               ),
             ),

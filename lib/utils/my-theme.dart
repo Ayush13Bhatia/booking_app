@@ -8,4 +8,5 @@ class MyColorTheme{
   static const Color darkBlueColor = Color(0xFF263172);
   static const Color lightBlueColor = Color(0xFF80abdb);
   static const Color black87 = Color(0xDD000000);
+  static const Color blackColor = Color(0xFF000000);
 }

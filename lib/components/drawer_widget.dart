@@ -46,27 +46,30 @@ class DrawerWidget extends StatelessWidget {
           // const Gap(20),
           Padding(
             padding: const EdgeInsets.only(left: 40.0),
-            child: ListView.separated(
-              shrinkWrap: true,
-              separatorBuilder: (context, _) {
-                return const Divider(
-                  thickness: 0.3,
-                  color: MyColorTheme.primaryLightColor,
-                );
-              },
-              itemCount: drawerList.length,
-              itemBuilder: (_, i) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: MyText(
-                    title: drawerList[i],
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: MyColorTheme.darkBlueColor,
-                          fontWeight: FontWeight.w500,
-                        ),
-                  ),
-                );
-              },
+            child: SizedBox(
+              width: 140,
+              child: ListView.separated(
+                shrinkWrap: true,
+                separatorBuilder: (context, _) {
+                  return const Divider(
+                    thickness: 0.3,
+                    color: MyColorTheme.primaryLightColor,
+                  );
+                },
+                itemCount: drawerList.length,
+                itemBuilder: (_, i) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: MyText(
+                      title: drawerList[i],
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: MyColorTheme.darkBlueColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         ],
